@@ -13,3 +13,4 @@ gtts
 gunicorn 
 Flask-SocketIO==5.3.6
 eventlet==0.33.3
+groq
