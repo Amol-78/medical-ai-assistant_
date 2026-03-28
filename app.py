@@ -40,7 +40,7 @@ app.register_blueprint(doctor_bp, url_prefix='/doctor')
 
 @app.route('/')
 def home():
-    return "WORKING ✅"
+    return "WORKING "
 
 
 @app.route('/login')
