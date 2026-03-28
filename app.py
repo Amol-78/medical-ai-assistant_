@@ -34,13 +34,10 @@ app.register_blueprint(admin_bp, url_prefix='/admin')
 app.register_blueprint(patient_bp, url_prefix='/patient')
 app.register_blueprint(doctor_bp, url_prefix='/doctor')
 
-# @app.route('/')
-# def home():
-#     return render_template('index.html')
-
 @app.route('/')
 def home():
-    return "WORKING "
+    return render_template('index.html')
+
 
 
 @app.route('/login')
