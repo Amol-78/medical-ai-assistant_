@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary: #3b82f6; /* Blue 500 */
+    --primary-hover: #2563eb; /* Blue 600 */
+    --secondary: #10b981;
+    --sidebar-bg: #111827; /* Gray 900 */
+    --sidebar-hover: #1f2937; /* Gray 800 */
+    --sidebar-text: #9ca3af; /* Gray 400 */
+    --sidebar-text-active: #3b82f6;
+    --bg-light: #f3f4f6; /* Gray 100 */
+    --text-main: #1f2937;
+    --text-muted: #6b7280;
+    --card-radius: 12px;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-main);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Sidebar Customizations */
+.sidebar {
+    background-color: var(--sidebar-bg) !important;
+    border-right: none !important;
+    transition: all 0.3s ease;
+}
+
+.sidebar-link {
+    padding: 12px 20px;
+    transition: 0.2s ease;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    color: var(--sidebar-text) !important;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.sidebar-link i {
+    width: 24px;
+    text-align: center;
+    margin-right: 12px;
+}
+
+.sidebar-link:hover {
+    background-color: var(--sidebar-hover);
+    color: #ffffff !important;
+}
+
+.sidebar-link.active {
+    background-color: var(--sidebar-hover);
+    color: var(--sidebar-text-active) !important;
+}
+
+.sidebar-link.active i {
+    color: var(--sidebar-text-active) !important;
+}
+
+/* Glassmorphism Cards */
+.glass-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: var(--card-radius);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    padding: 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Buttons */
+.btn-primary {
+    background: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: #ffffff !important;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover) !important;
+    border-color: var(--primary-hover) !important;
+}
+
+/* Chat Specific Styles */
+.chat-container {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    border: 1px solid #e5e7eb;
+    margin-top: 1rem;
+    overflow: hidden;
+}
+
+.chat-bubble-ai {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 0 16px 16px 16px !important;
+    color: var(--text-main);
+}
+
+.chat-bubble-user {
+    background-color: var(--primary);
+    border: none;
+    border-radius: 16px 0 16px 16px !important;
+    color: #ffffff;
+}
+
+.chat-input-wrapper {
+    background: #ffffff;
+    border-top: 1px solid #e5e7eb;
+}
+
+.chat-input {
+    border-radius: 20px !important;
+    background-color: #f9fafb !important;
+    border: 1px solid #e5e7eb !important;
+}
+
+.chat-input:focus {
+    box-shadow: none !important;
+    border-color: var(--primary) !important;
+}
+
+.btn-send {
+    background-color: var(--primary);
+    color: white;
+    border-radius: 12px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-send:hover {
+    background-color: var(--primary-hover);
+    color: white;
+}
+
+.btn-attach {
+    background-color: #6b7280;
+    color: white;
+    border-radius: 12px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.btn-attach:hover {
+    background-color: #4b5563;
+    color: white;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* Animations */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeInUp 0.3s ease forwards;
+}

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - MedAI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg sticky-top" style="background: rgba(33, 37, 41, 0.9) !important;">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand text-white" href="/">
+                <i class="fas fa-shield-alt text-warning me-2"></i>MedAI Admin
+            </a>
+            <div class="ms-auto d-flex align-items-center">
+                <span class="text-light me-3 d-none d-md-block"><i class="fas fa-user-shield me-1"></i> System Administrator</span>
+                <button class="btn btn-outline-light btn-sm px-3 shadow-sm d-none d-md-inline-block" onclick="logout()"><i class="fas fa-sign-out-alt me-1"></i> Logout</button>
+                <button class="btn btn-warning d-md-none shadow-sm ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarCollapse">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid px-0">
+        <div class="row m-0">
+            <!-- Sidebar -->
+            <div class="col-md-3 sidebar collapse d-md-block shadow-sm" id="sidebarCollapse" style="z-index: 1040; height: calc(100vh - 65px); overflow-y: auto; position: sticky; top: 65px; padding: 1.5rem 1rem;">
+                <div class="list-group border-0 bg-transparent mb-auto pt-3 nav nav-pills flex-column" id="adminTabs" role="tablist">
+                    <small style="color:var(--sidebar-text);" class="text-uppercase fw-bold px-3 mb-3" style="font-size: 0.75rem;">Admin Portal</small>
+                    
+                    <button class="sidebar-link mb-2 border-0 rounded active text-start fw-bold bg-transparent" id="doctors-tab" data-bs-toggle="tab" data-bs-target="#doctors" onclick="closeSidebarMobile()"><i class="fas fa-user-md me-2"></i> Manage Doctors</button>
+                    <button class="sidebar-link mb-2 border-0 rounded text-start fw-bold bg-transparent" id="reports-tab" data-bs-toggle="tab" data-bs-target="#reports" onclick="closeSidebarMobile()"><i class="fas fa-folder-open me-2"></i> System Reports</button>
+                    <button class="sidebar-link mb-2 border-0 rounded text-start fw-bold bg-transparent" id="requests-tab" data-bs-toggle="tab" data-bs-target="#requests" onclick="closeSidebarMobile()"><i class="fas fa-user-plus me-2"></i> Doctor Requests</button>
+                    
+                    <div class="mt-4 pt-4 border-top border-secondary border-opacity-25 d-md-none">
+                        <button class="btn btn-danger w-100 shadow-sm" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i> Logout</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9 p-4" style="min-height: calc(100vh - 65px); background-color: var(--bg-light);">
+                <div class="tab-content fade-in">
+            <!-- Doctors Tab -->
+            <div class="tab-pane fade show active" id="doctors">
+                <div class="glass-card">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+                        <h3 class="mb-0 text-dark w-100 w-md-auto text-center text-md-start"><i class="fas fa-users-cog me-2 text-primary"></i> Doctor Directory
+                        </h3>
+                        <div class="d-flex flex-column flex-sm-row gap-2 w-100 w-md-auto justify-content-center justify-content-md-end">
+                            <button id="addAdminBtn" class="btn btn-warning px-4 shadow-sm d-none"
+                                onclick="openAddAdminModal()"><i class="fas fa-user-shield me-2"></i> Add Admin</button>
+                            <a href="/register_doctor.html" class="btn btn-primary px-4 shadow-sm"><i
+                                    class="fas fa-plus me-2"></i> Add New Doctor</a>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Specialization</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="doctorTableBody">
+                                <tr>
+                                    <td colspan="7" class="text-center py-4"><i class="fas fa-spinner fa-spin me-2"></i>
+                                        Loading...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Requests Tab -->
+            <div class="tab-pane fade" id="requests">
+                <div class="glass-card">
+                    <h3 class="mb-4 text-dark"><i class="fas fa-user-clock me-2 text-warning"></i> Pending Doctor
+                        Approvals</h3>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Req ID</th>
+                                    <th>Doctor Name</th>
+                                    <th>Specialization</th>
+                                    <th>Credentials</th>
+                                    <th>Contact</th>
+                                    <th>Submitted</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="requestsTableBody">
+                                <tr>
+                                    <td colspan="7" class="text-center py-4"><i class="fas fa-spinner fa-spin me-2"></i>
+                                        Loading...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Tab -->
+            <div class="tab-pane fade" id="reports">
+                <div class="glass-card">
+                    <h3 class="mb-4 text-dark"><i class="fas fa-file-medical-alt me-2 text-primary"></i> All Patient
+                        Reports</h3>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Report ID</th>
+                                    <th>Patient ID</th>
+                                    <th>Symptoms Overview</th>
+                                    <th>Severity</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reportsTableBody">
+                                <tr>
+                                    <td colspan="5" class="text-center py-4"><i class="fas fa-spinner fa-spin me-2"></i>
+                                        Loading...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Edit Doctor Modal -->
+    <div class="modal fade" id="editDoctorModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius:16px;">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold"><i class="fas fa-user-edit me-2 text-primary"></i>Edit Doctor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="editDoctorId">
+                    <div class="mb-3">
+                        <label class="form-label text-muted fw-bold">Name</label>
+                        <input type="text" class="form-control" id="editName">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted fw-bold">Specialization</label>
+                        <select class="form-select form-control" id="editSpecialization">
+                            <option>Cardiologist</option>
+                            <option>Neurologist</option>
+                            <option>Dermatologist</option>
+                            <option>Orthopedic</option>
+                            <option>General Physician</option>
+                            <option>Pediatrician</option>
+                            <option>ENT Specialist</option>
+                            <option>Gastroenterologist</option>
+                            <option>Pulmonologist</option>
+                            <option>Endocrinologist</option>
+                            <option>Psychiatrist</option>
+                            <option>Ophthalmologist</option>
+                            <option>Gynecologist</option>
+                            <option>Urologist</option>
+                            <option>Oncologist</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted fw-bold">Email</label>
+                        <input type="email" class="form-control" id="editEmail">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted fw-bold">Phone</label>
+                        <input type="tel" class="form-control" id="editPhone">
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pb-3">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary px-4" onclick="updateDoctor()"><i
+                            class="fas fa-save me-2"></i> Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Request Approval Success Modal -->
+    <div class="modal fade" id="approveSuccessModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius:16px;">
+                <div class="modal-header border-0 pb-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center pt-0 pb-4">
+                    <i class="fas fa-check-circle fa-4x text-success mb-3"></i>
+                    <h4 class="text-dark fw-bold mb-3">Doctor Approved!</h4>
+                    <p class="text-muted mb-2">The official doctor account has been generated.</p>
+                    <div class="p-3 bg-light rounded text-start mb-3">
+                        <div><strong>Login Email:</strong> <span id="newDocEmail" class="text-primary"></span></div>
+                        <div><strong>Temp Password:</strong> <code id="newDocPassword"
+                                class="fs-5 text-dark border p-1 rounded"></code></div>
+                    </div>
+                    <button type="button" class="btn btn-primary px-4 w-100" data-bs-dismiss="modal">Close &
+                        Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Admin Modal (Super Admin Only) -->
+    <div class="modal fade" id="addAdminModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius:16px;">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title fw-bold text-dark"><i class="fas fa-user-shield me-2"></i>Create New Admin
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addAdminForm">
+                        <div class="mb-3">
+                            <label class="form-label text-muted fw-bold">Admin Name</label>
+                            <input type="text" class="form-control" id="newAdminName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-muted fw-bold">Email</label>
+                            <input type="email" class="form-control" id="newAdminEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-muted fw-bold">Phone</label>
+                            <input type="tel" class="form-control" id="newAdminPhone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-muted fw-bold">Password</label>
+                            <input type="password" class="form-control" id="newAdminPassword" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-0 pb-3">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-warning px-4 fw-bold" onclick="submitAddAdmin()"><i
+                            class="fas fa-plus me-2"></i> Create Admin</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Doctor Profile Modal -->
+    <div class="modal fade" id="doctorProfileModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content" style="border-radius:16px;">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title fw-bold" id="profileDocName"><i class="fas fa-user-md me-2"></i>Doctor
+                        Profile</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body bg-light" id="doctorProfileBody">
+                    <div class="text-center py-5"><i class="fas fa-spinner fa-spin fa-3x text-primary"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function closeSidebarMobile() {
+            const sidebar = document.getElementById('sidebarCollapse');
+            if (sidebar && sidebar.classList.contains('show') && window.innerWidth < 768) {
+                try {
+                    const bsCollapse = bootstrap.Collapse.getInstance(sidebar) || new bootstrap.Collapse(sidebar, { toggle: false });
+                    bsCollapse.hide();
+                } catch(e) {}
+            }
+        }
+    </script>
+    <script src="/static/js/admin.js?v=7"></script>
+</body>
+
+</html>

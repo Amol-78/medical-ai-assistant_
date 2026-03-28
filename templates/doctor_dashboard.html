@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard - MedAI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg sticky-top bg-white border-bottom shadow-sm">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand text-success fw-bold" href="/">
+                <i class="fas fa-heartbeat me-2"></i>MedAI Doctor
+            </a>
+            <div class="ms-auto d-flex align-items-center">
+                <span class="badge bg-success me-3 py-2 px-3 shadow-sm" id="availabilityBadge"><i class="fas fa-circle ms-1 me-1 text-white" style="font-size:8px; vertical-align:middle;"></i> Available</span>
+                <span class="text-muted me-3 d-none d-md-block"><i class="fas fa-user-md me-1"></i> Doctor Portal</span>
+                <button class="btn btn-outline-danger btn-sm px-3 shadow-sm d-none d-md-inline-block me-2" onclick="logout()"><i class="fas fa-sign-out-alt me-1"></i> Logout</button>
+                <button class="btn btn-success d-md-none shadow-sm" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarCollapse">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 sidebar collapse d-md-block shadow-sm" id="sidebarCollapse" style="z-index: 1040; height: calc(100vh - 65px); overflow-y: auto; position: sticky; top: 65px; padding: 1.5rem 1rem;">
+                <div class="list-group border-0 bg-transparent mb-auto pt-3 nav nav-pills flex-column" id="doctorTabs" role="tablist">
+                    <small style="color:var(--sidebar-text);" class="text-uppercase fw-bold px-3 mb-3" style="font-size: 0.75rem;">Doctor Portal</small>
+                    
+                    <button class="sidebar-link mb-2 border-0 rounded active text-start fw-bold bg-transparent" id="reports-tab" data-bs-toggle="tab" data-bs-target="#reports" type="button" onclick="closeSidebarMobile()"><i class="fas fa-file-medical me-2"></i> Pending Reports</button>
+                    <button class="sidebar-link mb-2 border-0 rounded text-start fw-bold bg-transparent" id="appointments-tab" data-bs-toggle="tab" data-bs-target="#appointments" type="button" onclick="closeSidebarMobile()"><i class="fas fa-calendar-alt me-2"></i> Appointments</button>
+                    <button class="sidebar-link mb-2 border-0 rounded text-start fw-bold bg-transparent" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-metrics" type="button" onclick="closeSidebarMobile()"><i class="fas fa-chart-pie me-2"></i> Analytics & Profile</button>
+                    <button class="sidebar-link mb-2 border-0 rounded text-start fw-bold bg-transparent" id="availability-tab" data-bs-toggle="tab" data-bs-target="#availability" type="button" onclick="closeSidebarMobile()"><i class="fas fa-user-clock me-2"></i> Status</button>
+                    
+                    <div class="mt-4 pt-4 border-top border-secondary border-opacity-25 d-md-none">
+                        <button class="btn btn-danger w-100 shadow-sm" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i> Logout</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9 p-4" style="min-height: calc(100vh - 65px); background-color: var(--bg-light);">
+                <div class="tab-content">
+            <!-- Reports Tab -->
+            <div class="tab-pane fade show active fade-in" id="reports">
+                <h3 class="mb-4 text-success"><i class="fas fa-clipboard-list me-2"></i> Assigned Patient Reports</h3>
+                <div id="reportsList" class="row">
+                    <!-- Loaded dynamically -->
+                    <div class="text-center w-100 my-5"><i class="fas fa-spinner fa-spin fa-3x text-success"></i></div>
+                </div>
+            </div>
+
+            <!-- Appointments Tab -->
+            <div class="tab-pane fade fade-in" id="appointments">
+                <h3 class="mb-4 text-primary"><i class="fas fa-calendar-check me-2"></i> Appointment Requests</h3>
+                <div class="glass-card">
+                    <div id="appointmentsList" class="list-group list-group-flush">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Availability Tab -->
+            <div class="tab-pane fade fade-in" id="availability">
+                <div class="glass-card text-center py-5">
+                    <h3 class="mb-4 text-dark"><i class="fas fa-sliders-h me-2"></i> Manage Availability</h3>
+                    <div class="d-flex justify-content-center align-items-center mb-4">
+                        <div class="form-check form-switch text-start" style="font-size: 1.25rem;">
+                            <input class="form-check-input" type="checkbox" id="availabilitySwitch" checked>
+                            <label class="form-check-label ms-2" for="availabilitySwitch">Available for new patients</label>
+                        </div>
+                    </div>
+                    <button class="btn btn-success px-5 py-2" onclick="updateAvailability()"><i class="fas fa-save me-2"></i> Save Changes</button>
+                </div>
+            </div>
+            
+            <!-- Analytics & Profile Tab -->
+            <div class="tab-pane fade fade-in" id="profile-metrics">
+                <div class="row align-items-center mb-4">
+                    <div class="col-md-8">
+                        <h3 class="mb-0 text-success fw-bold"><i class="fas fa-chart-pie me-2"></i> Performance & Earnings</h3>
+                    </div>
+                </div>
+                
+                <div id="analyticsContent">
+                    <div class="text-center w-100 py-5"><i class="fas fa-spinner fa-spin fa-3x text-success"></i></div>
+                </div>
+            </div>
+            
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for responding to report -->
+    <div class="modal fade" id="responseModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content" style="border-radius:16px; border:none; box-shadow:0 10px 30px rgba(0,0,0,0.1);">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold text-success"><i class="fas fa-stethoscope me-2"></i> Submit Diagnosis</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="currentReportId">
+                    <div id="reportDetails" class="bg-light p-3 rounded mb-4" style="border-left: 4px solid var(--secondary);"></div>
+                    <label class="form-label text-muted fw-bold">Your Professional Response</label>
+                    <textarea class="form-control mb-2" id="doctorResponse" rows="6" placeholder="Write your diagnosis, treatment plan, and advice..." style="box-shadow:none;"></textarea>
+                    <small class="text-muted"><i class="fas fa-info-circle me-1"></i> Your professional response will be simplified and translated for the patient by the AI system.</small>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success px-5" onclick="submitResponse()">Submit Diagnosis</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://meet.jit.si/external_api.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
+    <script>
+        function closeSidebarMobile() {
+            const sidebar = document.getElementById('sidebarCollapse');
+            if (sidebar && sidebar.classList.contains('show') && window.innerWidth < 768) {
+                try {
+                    const bsCollapse = bootstrap.Collapse.getInstance(sidebar) || new bootstrap.Collapse(sidebar, { toggle: false });
+                    bsCollapse.hide();
+                } catch(e) {}
+            }
+        }
+    </script>
+    <!-- Cache buster appended to script -->
+    <script src="/static/js/doctor.js?v=7"></script>
+</body>
+</html>

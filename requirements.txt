@@ -1,0 +1,15 @@
+Flask
+Flask-SQLAlchemy
+Flask-Bcrypt
+Flask-JWT-Extended
+Flask-CORS
+python-dotenv
+reportlab
+Pillow  
+
+pymysql 
+google-genai 
+gtts 
+gunicorn 
+Flask-SocketIO==5.3.6
+eventlet==0.33.3

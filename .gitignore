@@ -1,0 +1,13 @@
+
+__pycache__/
+*.pyc
+
+.env
+
+*.db
+
+.vscode/
+
+static/uploads/
+
+.DS_Store
